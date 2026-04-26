@@ -246,20 +246,28 @@ export const relations = defineRelations(
 			author: r.one.users({ from: r.tickets.authorId, to: r.users.id }),
 		},
 		repositories: {
-			folders: r.many.folders(),
-			documents: r.many.documents(),
+			folders: r.many.folders({ from: r.repositories.id, to: r.folders.repositoryId }),
+			documents: r.many.documents({ from: r.repositories.id, to: r.documents.repositoryId }),
 		},
 		folders: {
-			documents: r.many.documents(),
+			repository: r.one.repositories({ from: r.folders.repositoryId, to: r.repositories.id }),
+			documents: r.many.documents({ from: r.folders.id, to: r.documents.folderId }),
 		},
 		documents: {
 			repository: r.one.repositories({ from: r.documents.repositoryId, to: r.repositories.id }),
 			folder: r.one.folders({ from: r.documents.folderId, to: r.folders.id }),
-			workflows: r.many.workflowInstances(),
-			signatures: r.many.digitalSignatures(),
+			workflowInstances: r.many.workflowInstances({ from: r.documents.id, to: r.workflowInstances.documentId }),
+			signatures: r.many.digitalSignatures({ from: r.documents.id, to: r.digitalSignatures.documentId }),
 		},
 		workflows: {
-			instances: r.many.workflowInstances(),
+			instances: r.many.workflowInstances({ from: r.workflows.id, to: r.workflowInstances.workflowId }),
+		},
+		workflowInstances: {
+			workflow: r.one.workflows({ from: r.workflowInstances.workflowId, to: r.workflows.id }),
+			document: r.one.documents({ from: r.workflowInstances.documentId, to: r.documents.id }),
+		},
+		digitalSignatures: {
+			document: r.one.documents({ from: r.digitalSignatures.documentId, to: r.documents.id }),
 		},
 	})
 )
