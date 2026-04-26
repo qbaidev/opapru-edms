@@ -42,7 +42,14 @@ export class DocumentsService {
 	}
 
 	async update(id: string, data: Partial<{ title: string; description: string; status: string; version: string; tags: string }>) {
-		const [doc] = await db.update(documents).set({ ...data, updatedAt: new Date() }).where(eq(documents.id, id)).returning()
+		const updateFields: Record<string, unknown> = {}
+		if (data.title !== undefined) updateFields.title = data.title
+		if (data.description !== undefined) updateFields.description = data.description
+		if (data.version !== undefined) updateFields.version = data.version
+		if (data.tags !== undefined) updateFields.tags = data.tags
+		if (data.status !== undefined) updateFields.status = data.status as "draft" | "review" | "approved" | "archived" | "rejected"
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const [doc] = await db.update(documents).set(updateFields as any).where(eq(documents.id, id)).returning()
 		if (!doc) throw new NotFoundException(`Document ${id} not found`)
 		return doc
 	}
@@ -53,7 +60,8 @@ export class DocumentsService {
 	}
 
 	async updateStatus(id: string, status: "draft" | "review" | "approved" | "archived" | "rejected") {
-		const [doc] = await db.update(documents).set({ status, updatedAt: new Date() }).where(eq(documents.id, id)).returning()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const [doc] = await db.update(documents).set({ status } as any).where(eq(documents.id, id)).returning()
 		if (!doc) throw new NotFoundException(`Document ${id} not found`)
 		return doc
 	}

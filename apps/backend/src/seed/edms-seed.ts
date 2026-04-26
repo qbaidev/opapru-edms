@@ -171,7 +171,8 @@ async function seed() {
 
   const ips = ["192.168.1.10", "192.168.1.11", "192.168.1.12", "10.0.0.5", "10.0.0.6"]
   for (let i = 0; i < actions.length; i++) {
-    const a = actions[i]
+    const a = actions[i]!
+    const ip = ips[i % ips.length]!
     await db.insert(auditLogs).values({
       id: randomUUID(),
       userId: a.userId,
@@ -179,7 +180,7 @@ async function seed() {
       resourceType: a.rType,
       resourceId: randomUUID(),
       resourceName: a.rName,
-      ipAddress: ips[i % ips.length],
+      ipAddress: ip,
       details: `${a.action} performed on ${a.rName}`,
     }).onConflictDoNothing()
   }

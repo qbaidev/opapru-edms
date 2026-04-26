@@ -30,7 +30,8 @@ export class RepositoriesService {
 	}
 
 	async update(id: string, data: Partial<{ name: string; description: string; department: string; securityLevel: string }>) {
-		const [repo] = await db.update(repositories).set({ ...data, updatedAt: new Date() }).where(eq(repositories.id, id)).returning()
+		const [repo] = // eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await db.update(repositories).set(data as any).where(eq(repositories.id, id)).returning()
 		if (!repo) throw new NotFoundException(`Repository ${id} not found`)
 		return repo
 	}

@@ -31,7 +31,8 @@ export class FoldersService {
 	}
 
 	async update(id: string, data: Partial<{ name: string; parentId: string }>) {
-		const [folder] = await db.update(folders).set({ ...data, updatedAt: new Date() }).where(eq(folders.id, id)).returning()
+		const [folder] = // eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await db.update(folders).set(data as any).where(eq(folders.id, id)).returning()
 		if (!folder) throw new NotFoundException(`Folder ${id} not found`)
 		return folder
 	}

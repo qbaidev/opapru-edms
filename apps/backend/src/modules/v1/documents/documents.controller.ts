@@ -1,6 +1,8 @@
+import { AllowAnonymous } from "@thallesp/nestjs-better-auth"
 import { Controller, Get, Post, Put, Delete, Patch, Param, Body, Query } from "@nestjs/common"
 import { DocumentsService } from "./documents.service"
 
+@AllowAnonymous()
 @Controller("documents")
 export class DocumentsController {
 	constructor(private readonly svc: DocumentsService) {}
