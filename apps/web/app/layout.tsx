@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	title: "Turbo Template",
+	title: "OPAPRU EDMS",
 	description: "Turborepo monorepo template with Next.js, NestJS, and Flutter",
 }
 

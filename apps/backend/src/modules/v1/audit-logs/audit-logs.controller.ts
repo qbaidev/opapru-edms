@@ -3,7 +3,7 @@ import { Controller, Get, Post, Body, Query } from "@nestjs/common"
 import { AuditLogsService } from "./audit-logs.service"
 
 @AllowAnonymous()
-@Controller("audit-logs")
+@Controller({ path: "audit-logs", version: "1" })
 export class AuditLogsController {
 	constructor(private readonly svc: AuditLogsService) {}
 

@@ -3,7 +3,7 @@ import { Controller, Get, Post, Put, Delete, Param, Body } from "@nestjs/common"
 import { RepositoriesService } from "./repositories.service"
 
 @AllowAnonymous()
-@Controller("repositories")
+@Controller({ path: "repositories", version: "1" })
 export class RepositoriesController {
 	constructor(private readonly svc: RepositoriesService) {}
 

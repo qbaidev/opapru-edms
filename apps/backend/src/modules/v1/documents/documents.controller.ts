@@ -3,7 +3,7 @@ import { Controller, Get, Post, Put, Delete, Patch, Param, Body, Query } from "@
 import { DocumentsService } from "./documents.service"
 
 @AllowAnonymous()
-@Controller("documents")
+@Controller({ path: "documents", version: "1" })
 export class DocumentsController {
 	constructor(private readonly svc: DocumentsService) {}
 

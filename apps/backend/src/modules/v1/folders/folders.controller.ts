@@ -3,7 +3,7 @@ import { Controller, Get, Post, Put, Delete, Param, Body, Query } from "@nestjs/
 import { FoldersService } from "./folders.service"
 
 @AllowAnonymous()
-@Controller("folders")
+@Controller({ path: "folders", version: "1" })
 export class FoldersController {
 	constructor(private readonly svc: FoldersService) {}
 

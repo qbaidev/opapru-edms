@@ -46,7 +46,7 @@ export interface LogoProps {
 }
 
 export function Logo({
-	text = "Turbo Template",
+	text = "OPAPRU EDMS",
 	href,
 	size = "lg",
 	variant = "link",
