@@ -116,6 +116,9 @@
 }
 
 @layer base {
+	/* Fix native <select> dropdown ignoring dark mode */
+	select { color-scheme: dark light; background-color: hsl(var(--background)); color: hsl(var(--foreground)); }
+	select option { background-color: hsl(var(--background)); color: hsl(var(--foreground)); }
 	* {
 		@apply border-border outline-ring/50;
 	}
